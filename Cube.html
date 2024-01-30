@@ -43,10 +43,8 @@
     // Renderer in den HTML-Code einfügen
     document.body.appendChild(canvas);
 
-    // WebXR-Anwendung starten
+    // WebXR-Session starten
     session.requestSession(function(session) {
-      session.activate();
-
       // Renderer aktualisieren
       renderer.render(scene, camera);
     });
