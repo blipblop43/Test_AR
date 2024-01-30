@@ -5,70 +5,51 @@
   <title>WebXR Würfel</title>
 </head>
 <body>
-  <div id="qrcode"></div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/139/three.min.js"></script>
   <script>
-    // QR Code erstellen
-    var qrcode = new QRCode("https://github.com/blipblop43/Cube.html", {
-      width: 200,
-      height: 200,
-    });
-
-    // QR Code in den HTML-Code einfügen
-    document.getElementById("qrcode").appendChild(qrcode.domElement);
-
-    // Eventlistener für den QR Code hinzufügen
-    qrcode.addEventListener("scan", function(event) {
-      // WebXR-Anwendung starten
-      startXR();
-    });
-
-    // Funktion zum Starten der WebXR-Anwendung
-    function startXR() {
-      // Überprüfen, ob WebXR unterstützt wird
-      if (!navigator.xr) {
-        console.error("WebXR wird nicht unterstützt.");
-        return;
-      }
-
-      // WebXR-Session erstellen
-      var session = new XRSession();
-
-      // Renderer erstellen
-      var renderer = new THREE.WebGLRenderer({
-        antialias: true,
-      });
-
-      // Canvas erstellen
-      var canvas = document.createElement("canvas");
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      renderer.setSize(canvas.width, canvas.height);
-
-      // 3D-Szene erstellen
-      var scene = new THREE.Scene();
-
-      // 3D-Würfel erstellen
-      var cube = new THREE.Mesh(
-        new THREE.BoxGeometry(1, 1, 1),
-        new THREE.MeshBasicMaterial({ color: 0x00ff00 })
-      );
-      scene.add(cube);
-
-      // Renderer an die Szene anhängen
-      renderer.setScene(scene);
-
-      // Renderer in den HTML-Code einfügen
-      document.body.appendChild(canvas);
-
-      // WebXR-Anwendung starten
-      session.requestSession(function(session) {
-        session.activate();
-
-        // Renderer aktualisieren
-        renderer.render(scene, camera);
-      });
+    // Überprüfen, ob WebXR unterstützt wird
+    if (!navigator.xr) {
+      console.error("WebXR wird nicht unterstützt.");
+      return;
     }
+
+    // WebXR-Session erstellen
+    var session = new XRSession();
+
+    // Renderer erstellen
+    var renderer = new THREE.WebGLRenderer({
+      antialias: true,
+    });
+
+    // Canvas erstellen
+    var canvas = document.createElement("canvas");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    renderer.setSize(canvas.width, canvas.height);
+
+    // 3D-Szene erstellen
+    var scene = new THREE.Scene();
+
+    // 3D-Würfel erstellen
+    var cube = new THREE.Mesh(
+      new THREE.BoxGeometry(1, 1, 1),
+      new THREE.MeshBasicMaterial({ color: 0x00ff00 })
+    );
+    scene.add(cube);
+
+    // Renderer an die Szene anhängen
+    renderer.setScene(scene);
+
+    // Renderer in den HTML-Code einfügen
+    document.body.appendChild(canvas);
+
+    // WebXR-Anwendung starten
+    session.requestSession(function(session) {
+      session.activate();
+
+      // Renderer aktualisieren
+      renderer.render(scene, camera);
+    });
   </script>
 </body>
 </html>
