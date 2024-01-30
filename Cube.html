@@ -2,19 +2,21 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>WebXR Würfel</title>
+  <title>AR Würfel</title>
 </head>
 <body>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/139/three.min.js"></script>
   <script>
-    // Überprüfen, ob WebXR unterstützt wird
+    // Überprüfen, ob AR unterstützt wird
     if (!navigator.xr) {
-      console.error("WebXR wird nicht unterstützt.");
+      console.error("AR wird nicht unterstützt.");
       return;
     }
 
-    // WebXR-Session erstellen
-    var session = new XRSession();
+    // AR-Session erstellen
+    var session = new XRSession({
+      type: XRSession.TYPE_AR
+    });
 
     // Renderer erstellen
     var renderer = new THREE.WebGLRenderer({
@@ -43,11 +45,16 @@
     // Renderer in den HTML-Code einfügen
     document.body.appendChild(canvas);
 
-    // WebXR-Session starten
+    // AR-Session starten
     session.requestSession(function(session) {
       // Renderer aktualisieren
       renderer.render(scene, camera);
     });
+
+    // AR-Session aktualisieren
+    setInterval(function() {
+      session.update();
+    }, 1000 / 60);
   </script>
 </body>
 </html>
